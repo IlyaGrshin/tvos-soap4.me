@@ -1,19 +1,17 @@
 /* eslint camelcase: "off" */
 
 import { supportUHD } from '../request/soap';
+import { pluralSuffix } from '../utils';
 
 export default {
   'auth-checking': 'Проверяем авторизацию...',
 
   'menu-my': 'Мои',
-  'menu-all': 'Сериалы',
+  'menu-tvshows': 'Сериалы',
+  'menu-movies': 'Кино',
   'menu-search': '🔍',
-  'menu-genres': 'Жанры',
   'menu-account': 'Аккаунт',
   'menu-settings': 'Настройки',
-  'menu-recomendations': 'Рекомендации',
-
-  'genres-caption': 'Жанры',
 
   'user-caption': 'Аккаунт',
   'user-description': ({ till }) => `Расширенный аккаунт истекает ${till}`,
@@ -187,6 +185,106 @@ export default {
   'new-season-day': 'Сезон в течение дня',
   'new-season-custom-date': ({ date }) => `Сезон ${date}`,
 
+  'movies-group-by': 'Группировать по',
+  'movies-group-by-title': ({ title }) => `Группировать по ${title}`,
+
+  'movies-group-title-latest': 'Последние Добавленные',
+  'movies-group-latest-title': 'Последние Фильмы',
+
+  'movies-group-title-recommendations': 'Рекомендациям',
+  'movies-group-recommendations-title': 'Мои рекомендации',
+
+  'movies-group-title-name': 'Имени',
+  'movies-group-name-title': 'A — Z',
+
+  'movies-group-title-date': 'Дате',
+
+  'movies-group-title-likes': 'Лайкам',
+  'movies-group-likes-title-over-thousand': ({ thousand }) =>
+    `Более ${thousand}k`,
+  'movies-group-likes-title-over-hundred': ({ hundred }) => `Более ${hundred}`,
+  'movies-group-likes-title-lower-hundred': ({ hundred }) => `Менее ${hundred}`,
+
+  'movies-group-title-rating': 'Рейтингу',
+
+  'movies-group-title-franchise': 'Франшизе',
+
+  'movies-group-title-country': 'Стране',
+
+  'movies-group-title-favorite': 'Избранному',
+  'movies-group-name-favorite': 'Мое избранное',
+
+  'movies-group-title-genres': 'Жанру',
+  'movies-group-by-genres-title': ({ title }) => `Фильтровать по ${title}`,
+
+  'movie-title': ({ title_ru }) => title_ru || '',
+  'movie-description': ({ description_ru }) => description_ru || '',
+  'movie-runtime': ({ runtime }) => runtime || '',
+  'movie-genres': 'Жанры',
+  'movie-directors': 'Режиссеры',
+  'movie-actors': 'Актеры',
+  'movie-franchise': 'Франшиза',
+  'movie-ratings': 'Рейтинги и Отзывы',
+  'movie-cast-crew': 'Актеры',
+  'movie-cast-crew-role': ({ role }) =>
+    ({
+      director: 'Режиссер',
+      writer: 'Сценарист',
+      actor: 'Актер',
+    }[role] || ''),
+
+  'movie-information': 'Информация',
+  'movie-information-year': 'Год',
+  'movie-information-runtime': 'Тайминг',
+  'movie-information-country': 'Страна',
+  'movie-information-budget': 'Бюджет',
+  'movie-information-gross_worldwide': 'Общие сборы',
+
+  'movie-information-languages': 'Языки',
+  'movie-information-languages-primary': 'Основные',
+  'movie-information-languages-primary-values': 'Русский, Английский',
+
+  'movie-liked-by': 'Нравится',
+  'movie-liked-by-people': ({ likes }) => `пользователям: ${likes}`,
+  'movie-liked-by-no-one': 'никому',
+
+  'movie-control-watch': 'Смотреть',
+  'movie-control-mark-as-watched': 'Отметить просмотр',
+  'movie-control-favorite': 'Добавить в Избранное',
+  'movie-control-unfavorite': 'Удалить из Избранного',
+  'movie-control-rate': 'Оценить Фильм',
+  'movie-control-more': 'Еще',
+
+  'movie-title-more': 'Еще',
+  'movie-mark-as-unwatched': 'Отметить Фильм как не просмотренный',
+
+  'movie-title-subscription-warning': 'Не подходящая подписка',
+  'movie-subscription-warning':
+    'Фильмы доступны только с подпиской "4k UHD + Фильмы"',
+
+  'movie-franchise-title': ({ franchise }) => `Франшиза: ${franchise}`,
+
+  'movie-imdb-title': 'IMDB',
+  'movie-average-imdb': ({ amount }) =>
+    `${amount} голос${pluralSuffix(amount, {
+      singular: 'а',
+      plural: 'ов',
+    })}`,
+
+  'movie-kinopoisk-title': 'Кинопоиск',
+  'movie-average-kinopoisk': ({ amount }) =>
+    `${amount} голос${pluralSuffix(amount, {
+      singular: 'а',
+      plural: 'ов',
+    })}`,
+
+  'movie-soap-title': 'soap4.me',
+  'movie-average-soap': ({ amount }) =>
+    `${amount} голос${pluralSuffix(amount, {
+      singular: 'а',
+      plural: 'ов',
+    })}`,
+
   'my-caption': 'Мои',
 
   'my-closed': 'Завершенные',
@@ -198,42 +296,58 @@ export default {
     'Ты можешь начать с добавления каких-нибудь сериалов из раздела "Сериалы"',
   'my-empty-list-button': 'Перейти в раздел "Сериалы"',
 
-  'my-recomendations': 'Мои рекомендации',
-  'my-empty-recomendations': 'У тебя пока что нет никаких рекомендаций',
+  'tvshows-caption': 'Сериалы',
 
-  'all-caption': 'Сериалы',
+  'tvshows-group-by': 'Группировать по',
+  'tvshows-group-by-title': ({ title }) => `Группировать по ${title}`,
 
-  'all-group-by': 'Группировать по',
-  'all-group-by-title': ({ title }) => `Группировать по ${title}`,
+  'tvshows-group-title-latest': 'Последние Добавленные',
+  'tvshows-group-latest-title': 'Последние Сериалы',
 
-  'all-group-title-name': 'Имени',
-  'all-group-name-title': 'A — Z',
+  'tvshows-group-title-recommendations': 'Рекомендациям',
+  'tvshows-group-recommendations-title': 'Мои рекомендации',
 
-  'all-group-title-date': 'Дате',
+  'tvshows-group-title-name': 'Имени',
+  'tvshows-group-name-title': 'A — Z',
 
-  'all-group-title-likes': 'Лайкам',
-  'all-group-likes-title-over-thousand': ({ thousand }) => `Более ${thousand}k`,
-  'all-group-likes-title-over-hundred': ({ hundred }) => `Более ${hundred}`,
-  'all-group-likes-title-lower-hundred': ({ hundred }) => `Менее ${hundred}`,
+  'tvshows-group-title-date': 'Дате',
 
-  'all-group-title-rating': 'Рейтингу',
+  'tvshows-group-title-likes': 'Лайкам',
+  'tvshows-group-likes-title-over-thousand': ({ thousand }) =>
+    `Более ${thousand}k`,
+  'tvshows-group-likes-title-over-hundred': ({ hundred }) => `Более ${hundred}`,
+  'tvshows-group-likes-title-lower-hundred': ({ hundred }) =>
+    `Менее ${hundred}`,
 
-  'all-group-title-country': 'Стране',
+  'tvshows-group-title-rating': 'Рейтингу',
 
-  'all-group-title-completeness': 'Завершенности',
-  'all-group-completeness-title': 'Завершенные',
+  'tvshows-group-title-country': 'Стране',
 
-  'all-group-title-uhd': '4K (UHD)',
-  'all-group-uhd-title': 'A — Z',
+  'tvshows-group-title-completeness': 'Завершенности',
+  'tvshows-group-completeness-title': 'Завершенные',
+
+  'tvshows-group-title-uhd': '4K (UHD)',
+  'tvshows-group-uhd-title': 'A — Z',
+
+  'tvshows-group-title-genres': 'Жанру',
+  'tvshows-group-by-genres-title': ({ title }) => `Фильтровать по ${title}`,
 
   'search-latest': 'Новые сериалы',
   'search-popular': 'Популярные сериалы',
   'search-persons': 'Люди',
   'search-actor': 'Актер / Актриса',
   'search-tvshows': 'Сериалы',
+  'search-movies': 'Фильмы',
 
   'actor-tvshows': 'Сериалы',
+  'actor-movies': 'Фильмы',
   'actor-title': 'Актер / Актриса',
+
+  'director-movies': 'Фильмы',
+  'director-title': 'Режиссер',
+
+  'writer-movies': 'Фильмы',
+  'writer-title': 'Сценарист',
 
   'authorize-caption': 'Авторизация',
   'authorize-description':

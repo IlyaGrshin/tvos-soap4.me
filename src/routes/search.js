@@ -7,15 +7,12 @@ import {
   prettifyEpisodeNum,
   getMonogramImageUrl,
   sortTvShows,
+  movieIsUHD,
 } from '../utils';
 
 import { processEntitiesInString } from '../utils/parser';
 
-import {
-  getSearchResults,
-  getLatestTVShows,
-  getPopularTVShows,
-} from '../request/soap';
+import { getSearchResults } from '../request/soap';
 
 import Tile from '../components/tile';
 
@@ -30,11 +27,10 @@ export default function searchRoute() {
             value: '',
             loading: false,
             updating: false,
-            latest: [],
             series: [],
-            popular: [],
             persons: [],
             episodes: [],
+            movies: [],
           };
         },
 
@@ -66,9 +62,8 @@ export default function searchRoute() {
                   showSpinner={this.state.loading ? 'true' : undefined}
                 />
                 <collectionList>
-                  {this.renderLatest()}
-                  {this.renderPopular()}
                   {this.renderPersons()}
+                  {this.renderMovies()}
                   {this.renderShows()}
                   {episodes.map((name, i) =>
                     this.renderEpisodes(
@@ -78,72 +73,6 @@ export default function searchRoute() {
                 </collectionList>
               </searchTemplate>
             </document>
-          );
-        },
-
-        renderLatest() {
-          if (!this.state.latest.length || this.state.value) return null;
-
-          return (
-            <shelf>
-              <header>
-                <title>{i18n('search-latest')}</title>
-              </header>
-              <section>
-                {this.state.latest.map(tvshow => {
-                  const {
-                    sid,
-                    covers: { big: poster },
-                  } = tvshow;
-
-                  const isUHD = !!tvshow['4k'];
-                  const title = i18n('tvshow-title', tvshow);
-
-                  return (
-                    <Tile
-                      title={title}
-                      route="tvshow"
-                      poster={poster}
-                      isUHD={isUHD}
-                      payload={{ title, sid, poster }}
-                    />
-                  );
-                })}
-              </section>
-            </shelf>
-          );
-        },
-
-        renderPopular() {
-          if (!this.state.popular.length || this.state.value) return null;
-
-          return (
-            <shelf>
-              <header>
-                <title>{i18n('search-popular')}</title>
-              </header>
-              <section>
-                {this.state.popular.map(tvshow => {
-                  const {
-                    sid,
-                    covers: { big: poster },
-                  } = tvshow;
-
-                  const isUHD = !!tvshow['4k'];
-                  const title = i18n('tvshow-title', tvshow);
-
-                  return (
-                    <Tile
-                      title={title}
-                      route="tvshow"
-                      poster={poster}
-                      isUHD={isUHD}
-                      payload={{ title, sid, poster }}
-                    />
-                  );
-                })}
-              </section>
-            </shelf>
           );
         },
 
@@ -183,6 +112,40 @@ export default function searchRoute() {
                       <title>{actorName}</title>
                       <subtitle>{i18n('search-actor')}</subtitle>
                     </monogramLockup>
+                  );
+                })}
+              </section>
+            </shelf>
+          );
+        },
+
+        renderMovies() {
+          const { movies } = this.state;
+
+          if (!movies.length) return null;
+
+          return (
+            <shelf class="shelf_indent">
+              <header>
+                <title>{i18n('search-movies')}</title>
+              </header>
+              <section>
+                {movies.map(movie => {
+                  const {
+                    id,
+                    covers: { big: poster },
+                  } = movie;
+
+                  const title = i18n('movie-title', movie);
+
+                  return (
+                    <Tile
+                      title={title}
+                      route="movie"
+                      poster={poster}
+                      isUHD={movieIsUHD(movie)}
+                      payload={{ title, id, poster }}
+                    />
                   );
                 })}
               </section>
@@ -288,9 +251,7 @@ export default function searchRoute() {
         },
 
         loadData() {
-          return Promise.all([getLatestTVShows(), getPopularTVShows()]).then(
-            ([latest, popular]) => ({ latest, popular }),
-          );
+          return Promise.resolve({});
         },
 
         search(query) {

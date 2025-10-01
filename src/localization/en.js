@@ -1,19 +1,17 @@
 /* eslint camelcase: "off" */
 
 import { supportUHD } from '../request/soap';
+import { pluralSuffix } from '../utils';
 
 export default {
   'auth-checking': 'Checking authorization...',
 
   'menu-my': 'My',
-  'menu-all': 'Shows',
+  'menu-tvshows': 'Shows',
+  'menu-movies': 'Movies',
   'menu-search': '🔍',
-  'menu-genres': 'Genres',
   'menu-account': 'Account',
   'menu-settings': 'Settings',
-  'menu-recomendations': 'Recomendations',
-
-  'genres-caption': 'Genres',
 
   'user-caption': 'Account',
   'user-description': ({ till }) => `Extended account expires ${till}`,
@@ -140,6 +138,12 @@ export default {
   'tvshow-also-watched': 'Viewers Also Watched',
   'tvshow-ratings': 'Ratings and Reviews',
   'tvshow-cast-crew': 'Cast and Crew',
+  'movie-cast-crew-role': ({ role }) =>
+    ({
+      director: 'Director',
+      writer: 'Writer',
+      actor: 'Actor',
+    }[role] || ''),
 
   'tvshow-information': 'Information',
   'tvshow-information-year': 'Year',
@@ -186,6 +190,101 @@ export default {
   'new-season-day': 'Season in a day',
   'new-season-custom-date': ({ date }) => `Season ${date}`,
 
+  'movies-group-by': 'Group by',
+  'movies-group-by-title': ({ title }) => `Group by ${title}`,
+
+  'movies-group-title-latest': 'Latest Added',
+  'movies-group-latest-title': 'Latest Movies',
+
+  'movies-group-title-recommendations': 'Recommendations',
+  'movies-group-recommendations-title': 'My recommendations',
+
+  'movies-group-title-name': 'Name',
+  'movies-group-name-title': 'A — Z',
+
+  'movies-group-title-date': 'Date',
+
+  'movies-group-title-likes': 'Likes',
+  'movies-group-likes-title-over-thousand': ({ thousand }) =>
+    `Over ${thousand}k`,
+  'movies-group-likes-title-over-hundred': ({ hundred }) => `Over ${hundred}`,
+  'movies-group-likes-title-lower-hundred': ({ hundred }) => `Lower ${hundred}`,
+
+  'movies-group-title-rating': 'Rating',
+
+  'movies-group-title-franchise': 'Franchise',
+
+  'movies-group-title-country': 'Country',
+
+  'movies-group-title-favorite': 'Favorites',
+  'movies-group-name-favorite': 'My favorites',
+
+  'movies-group-title-genres': 'Genre',
+  'movies-group-by-genres-title': ({ title }) => `Filter by ${title}`,
+
+  'movie-title': ({ title }) => title || '',
+  'movie-description': ({ description }) => description || '',
+  'movie-runtime': ({ runtime }) =>
+    runtime ? runtime.replace('ч', 'h').replace('м', 'm') : '',
+  'movie-genres': 'Genres',
+  'movie-directors': 'Directors',
+  'movie-actors': 'Actors',
+  'movie-franchise': 'Franchise',
+  'movie-ratings': 'Ratings and Reviews',
+  'movie-cast-crew': 'Cast and Crew',
+
+  'movie-information': 'Information',
+  'movie-information-year': 'Year',
+  'movie-information-runtime': 'Runtime',
+  'movie-information-country': 'Country',
+  'movie-information-budget': 'Budget',
+  'movie-information-gross_worldwide': 'Gross worldwide',
+
+  'movie-information-languages': 'Languages',
+  'movie-information-languages-primary': 'Primary',
+  'movie-information-languages-primary-values': 'Russian, English',
+
+  'movie-liked-by': 'Liked by',
+  'movie-liked-by-people': ({ likes }) => `${likes} people`,
+  'movie-liked-by-no-one': 'no one',
+
+  'movie-control-watch': 'Watch',
+  'movie-control-mark-as-watched': 'Mark as Watched',
+  'movie-control-favorite': 'Add to Favorite',
+  'movie-control-unfavorite': 'Remove from Favorite',
+  'movie-control-rate': 'Rate Movie',
+  'movie-control-more': 'More',
+
+  'movie-title-more': 'More',
+  'movie-mark-as-unwatched': 'Mark Movie as Unwatched',
+
+  'movie-title-subscription-warning': 'Insufficient subscription',
+  'movie-subscription-warning':
+    'Movies are only accessible with a "4k UHD + Фильмы" subscription',
+
+  'movie-franchise-title': ({ franchise }) => `Franchise: ${franchise}`,
+
+  'movie-imdb-title': 'IMDB',
+  'movie-average-imdb': ({ amount }) =>
+    `${amount} vote${pluralSuffix(amount, {
+      singular: '',
+      plural: 's',
+    })}`,
+
+  'movie-kinopoisk-title': 'Kinopoisk',
+  'movie-average-kinopoisk': ({ amount }) =>
+    `${amount} vote${pluralSuffix(amount, {
+      singular: '',
+      plural: 's',
+    })}`,
+
+  'movie-soap-title': 'soap4.me',
+  'movie-average-soap': ({ amount }) =>
+    `${amount} vote${pluralSuffix(amount, {
+      singular: '',
+      plural: 's',
+    })}`,
+
   'my-caption': 'My',
 
   'my-closed': 'Closed',
@@ -197,42 +296,58 @@ export default {
     'You can start from adding some tv series from "TV Shows" sections',
   'my-empty-list-button': 'Go to "TV Shows"',
 
-  'my-recomendations': 'My recomendations',
-  'my-empty-recomendations': "You don't have any recomendations yet",
+  'tvshows-caption': 'TV Shows',
 
-  'all-caption': 'TV Shows',
+  'tvshows-group-by': 'Group by',
+  'tvshows-group-by-title': ({ title }) => `Group by ${title}`,
 
-  'all-group-by': 'Group by',
-  'all-group-by-title': ({ title }) => `Group by ${title}`,
+  'tvshows-group-title-latest': 'Latest Added',
+  'tvshows-group-latest-title': 'Latest TV Shows',
 
-  'all-group-title-name': 'Name',
-  'all-group-name-title': 'A — Z',
+  'tvshows-group-title-recommendations': 'Recommendations',
+  'tvshows-group-recommendations-title': 'My recommendations',
 
-  'all-group-title-date': 'Date',
+  'tvshows-group-title-name': 'Name',
+  'tvshows-group-name-title': 'A — Z',
 
-  'all-group-title-likes': 'Likes',
-  'all-group-likes-title-over-thousand': ({ thousand }) => `Over ${thousand}k`,
-  'all-group-likes-title-over-hundred': ({ hundred }) => `Over ${hundred}`,
-  'all-group-likes-title-lower-hundred': ({ hundred }) => `Lower ${hundred}`,
+  'tvshows-group-title-date': 'Date',
 
-  'all-group-title-rating': 'Rating',
+  'tvshows-group-title-likes': 'Likes',
+  'tvshows-group-likes-title-over-thousand': ({ thousand }) =>
+    `Over ${thousand}k`,
+  'tvshows-group-likes-title-over-hundred': ({ hundred }) => `Over ${hundred}`,
+  'tvshows-group-likes-title-lower-hundred': ({ hundred }) =>
+    `Lower ${hundred}`,
 
-  'all-group-title-country': 'Country',
+  'tvshows-group-title-rating': 'Rating',
 
-  'all-group-title-completeness': 'Completeness',
-  'all-group-completeness-title': 'Completed',
+  'tvshows-group-title-country': 'Country',
 
-  'all-group-title-uhd': '4K (UHD)',
-  'all-group-uhd-title': 'A — Z',
+  'tvshows-group-title-completeness': 'Completeness',
+  'tvshows-group-completeness-title': 'Completed',
+
+  'tvshows-group-title-uhd': '4K (UHD)',
+  'tvshows-group-uhd-title': 'A — Z',
+
+  'tvshows-group-title-genres': 'Genre',
+  'tvshows-group-by-genres-title': ({ title }) => `Filter by ${title}`,
 
   'search-latest': 'Latest TV Shows',
   'search-popular': 'Popular TV Shows',
   'search-persons': 'Persons',
   'search-actor': 'Actor',
   'search-tvshows': 'TV Shows',
+  'search-movies': 'Movies',
 
   'actor-tvshows': 'TV Shows',
+  'actor-movies': 'Movies',
   'actor-title': 'Actor',
+
+  'director-movies': 'Movies',
+  'director-title': 'Director',
+
+  'writer-movies': 'Movies',
+  'writer-title': 'Writer',
 
   'authorize-caption': 'Authorization',
   'authorize-description':

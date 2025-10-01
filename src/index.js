@@ -10,19 +10,22 @@ import { checkSession } from './request/soap';
 import { getStartParams, getOpenURLParams, isQello } from './utils';
 
 import myRoute from './routes/my';
-import allRoute from './routes/all';
 import menuRoute from './routes/menu';
 import userRoute from './routes/user';
 import actorRoute from './routes/actor';
 import seasonRoute from './routes/season';
 import tvShowRoute from './routes/tvshow';
+import tvShowsRoute from './routes/tvshows';
+import movieRoute from './routes/movie';
+import moviesRoute from './routes/movies';
+import movieActorRoute from './routes/movie-actor';
+import movieWriterRoute from './routes/movie-writer';
+import movieDirectorRoute from './routes/movie-director';
 import searchRoute from './routes/search';
-import genresRoute from './routes/genres';
 import settingsRoute from './routes/settings';
 import speedTestRoute from './routes/speedtest';
-import myRecomendations from './routes/recomendations';
 
-import { AUTH, BASIC, GUEST } from './routes/menu/constants';
+import { AUTH, GUEST } from './routes/menu/constants';
 
 import Loader from './components/loader';
 
@@ -50,12 +53,10 @@ TVDML.subscribe(TVDML.event.LAUNCH).pipe(params => {
 TVDML.handleRoute('get-token')
   .pipe(TVDML.render(<Loader title={i18n('auth-checking')} />))
   .pipe(checkSession)
-  .pipe(payload => {
-    const { logged, token, till } = payload;
-    user.set({ logged, token, till });
-    return payload;
+  .pipe(session => {
+    user.set(session);
+    return processFamilyAccount(session.login);
   })
-  .pipe(({ login }) => processFamilyAccount(login))
   .pipe(() => {
     TVDML.redirect('main');
 
@@ -74,6 +75,7 @@ TVDML.handleRoute('get-token')
   });
 
 TVDML.handleRoute('main').pipe(
+  // There should be no more than 6 items, or Apple TV will start hiding the rest
   menuRoute([
     {
       route: 'search',
@@ -84,15 +86,12 @@ TVDML.handleRoute('main').pipe(
       hidden: GUEST,
     },
     {
-      route: 'all',
+      route: 'tvshows',
       active: GUEST,
     },
     {
-      route: 'recomendations',
-      hidden: [GUEST, BASIC],
-    },
-    {
-      route: 'genres',
+      route: 'movies',
+      hidden: GUEST,
     },
     {
       route: 'settings',
@@ -102,7 +101,17 @@ TVDML.handleRoute('main').pipe(
 
 TVDML.handleRoute('my').pipe(myRoute());
 
-TVDML.handleRoute('all').pipe(allRoute());
+TVDML.handleRoute('tvshows').pipe(tvShowsRoute());
+
+TVDML.handleRoute('movies').pipe(moviesRoute());
+
+TVDML.handleRoute('movie').pipe(movieRoute());
+
+TVDML.handleRoute('movie-director').pipe(movieDirectorRoute());
+
+TVDML.handleRoute('movie-writer').pipe(movieWriterRoute());
+
+TVDML.handleRoute('movie-actor').pipe(movieActorRoute());
 
 TVDML.handleRoute('search').pipe(searchRoute());
 
@@ -117,7 +126,3 @@ TVDML.handleRoute('actor').pipe(actorRoute());
 TVDML.handleRoute('speedtest').pipe(speedTestRoute());
 
 TVDML.handleRoute('user').pipe(userRoute());
-
-TVDML.handleRoute('genres').pipe(genresRoute());
-
-TVDML.handleRoute('recomendations').pipe(myRecomendations());
