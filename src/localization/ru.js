@@ -170,6 +170,7 @@ export default {
   'tvshow-status-running': 'Идет показ',
 
   'tvshow-control-continue-watching': 'Продолжить Просмотр',
+  'tvshow-control-random-episode': 'Случайно',
   'tvshow-control-show-trailer': 'Посмотреть Трейлер',
   'tvshow-control-show-trailers': 'Посмотреть Трейлеры',
   'tvshow-control-start-watching': 'Начать Просмотр',

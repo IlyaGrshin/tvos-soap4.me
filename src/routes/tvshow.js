@@ -313,11 +313,19 @@ export default function tvShowRoute() {
               </buttonLockup>
             );
 
+            const randomEpisodeBtn = (
+              <buttonLockup onSelect={this.onPlayRandomEpisode}>
+                <badge src="resource://button-shuffle" />
+                <title>{i18n('tvshow-control-random-episode')}</title>
+              </buttonLockup>
+            );
+
             if (this.state.watching) {
               buttons = (
                 <row>
                   {this.canContinueWatching() && continueWatchingBtn}
                   {hasTrailers && showTrailerBtn}
+                  {this.state.authorized && randomEpisodeBtn}
                   {this.state.authorized && stopWatchingBtn}
                   {this.state.authorized && rateBtn}
                   {this.state.authorized && moreBtn}
@@ -327,6 +335,7 @@ export default function tvShowRoute() {
               buttons = (
                 <row>
                   {hasTrailers && showTrailerBtn}
+                  {randomEpisodeBtn}
                   {startWatchingBtn}
                   {this.state.authorized && rateBtn}
                   {this.state.authorized && moreBtn}
@@ -792,6 +801,45 @@ export default function tvShowRoute() {
               id: seasonNumber,
               title: `${title} — ${seasonTitle}`,
               shouldPlayImmediately,
+            }).then(() => this.setState({ loading: false }));
+          },
+
+          onPlayRandomEpisode() {
+            const { seasons } = this.state;
+            const availableSeasons = seasons.filter(
+              season => season.episodes && season.episodes.length > 0,
+            );
+
+            if (availableSeasons.length === 0) return;
+
+            // Выбираем случайный сезон
+            const randomSeason =
+              availableSeasons[
+                Math.floor(Math.random() * availableSeasons.length)
+              ];
+
+            // Выбираем случайный эпизод из сезона
+            const randomEpisode =
+              randomSeason.episodes[
+                Math.floor(Math.random() * randomSeason.episodes.length)
+              ];
+
+            const {
+              season: seasonNumber,
+              covers: { big: poster },
+            } = randomSeason;
+
+            const seasonTitle = i18n('tvshow-season', { seasonNumber });
+            const title = i18n('tvshow-title', this.state.tvshow);
+            const { sid } = this.state.tvshow;
+
+            TVDML.navigate('season', {
+              sid,
+              poster,
+              id: seasonNumber,
+              title: `${title} — ${seasonTitle}`,
+              episodeNumber: randomEpisode.episode,
+              shouldPlayImmediately: true,
             }).then(() => this.setState({ loading: false }));
           },
 

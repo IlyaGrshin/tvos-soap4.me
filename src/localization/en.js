@@ -175,6 +175,7 @@ export default {
   'tvshow-status-running': 'Running',
 
   'tvshow-control-continue-watching': 'Continue Watching',
+  'tvshow-control-random-episode': 'Random',
   'tvshow-control-show-trailer': 'Show\nTrailer',
   'tvshow-control-show-trailers': 'Show\nTrailers',
   'tvshow-control-start-watching': 'Start Watching',
