@@ -335,8 +335,8 @@ export default function tvShowRoute() {
               buttons = (
                 <row>
                   {hasTrailers && showTrailerBtn}
-                  {randomEpisodeBtn}
                   {startWatchingBtn}
+                  {randomEpisodeBtn}
                   {this.state.authorized && rateBtn}
                   {this.state.authorized && moreBtn}
                 </row>
